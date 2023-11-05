@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 
 
 export const RecipeCard = (props) => {
@@ -16,40 +17,37 @@ export const RecipeCard = (props) => {
 		setIsFavorite(!isFavorite);
 	};
 
-	const url = props.Url
 
-
-
-	const getRecipe = () => {
-		fetch(url, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-RapidAPI-Key': 'f4a6409e03msh2513ad740baf8b9p13e32fjsn5d20d8842c5f',
-				'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-			},
-			body: JSON.stringify(),
-			params: {
-				Number: props.randomNumber
-			  },
-		})
-			.then(async (data) => {
-				const response = await data.json();
-				return response;
-			})
-			.then((data) => {
-				console.log(data);
-				setRecipe(data);
-				totalRecipePrice(data);
-				dietDisplay(data);
-			})
-			.catch((error) => {
-				console.error('There was a problem with the fetch operation:', error);
-			});
-	}
+	// const getRecipe = () => {
+	// 	fetch(url, {
+	// 		method: 'GET',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 			'X-RapidAPI-Key': 'f4a6409e03msh2513ad740baf8b9p13e32fjsn5d20d8842c5f',
+	// 			'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+	// 		},
+	// 		body: JSON.stringify(),
+	// 		params: {
+	// 			Number: props.randomNumber
+	// 		  },
+	// 	})
+	// 		.then(async (data) => {
+	// 			const response = await data.json();
+	// 			return response;
+	// 		})
+	// 		.then((data) => {
+	// 			console.log(data);
+	// 			setRecipe(data);
+	// 			totalRecipePrice(data);
+	// 			dietDisplay(data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error('There was a problem with the fetch operation:', error);
+	// 		});
+	// }
 
 	useEffect(() => {
-		getRecipe();
+		;
 	}, []);
 
 	const totalRecipePrice = (recipeData) => {
