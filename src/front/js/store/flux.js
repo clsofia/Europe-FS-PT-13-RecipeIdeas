@@ -13,7 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			complexSearchResults: [],
+			
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,6 +48,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			getComplexSearch: (cuisine) => {
+				const store = getStore();
+				console.log(cuisine)
+				fetch(`https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?${cuisine}`, {
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+						'X-RapidAPI-Key': 'f4a6409e03msh2513ad740baf8b9p13e32fjsn5d20d8842c5f',
+						'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+					},
+					body: JSON.stringify()
+				})
+					.then(async (data) => {
+						const response = await data.json();
+						return response;
+					})
+					.then((data) => {
+						setStore({ complexSearchResults: data["results"] });
+						console.log("store for the complex search results");
+						console.log(getStore().complexSearchResults)
+					})
+					.catch((error) => {
+						console.error('There was a problem with the fetch operation:', error);
+					});
 			}
 		}
 	};
